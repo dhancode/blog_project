@@ -1,0 +1,60 @@
+{% extends 'blog/base.html' %}
+{% block title %}Add / Edit Blog{% endblock %}
+
+{% block content %}
+<style>
+    form {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+
+    .actions {
+        margin-top: 20px;
+    }
+</style>
+
+<h2>{% if post %}Edit{% else %}Add{% endif %} Blog Post</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Image</label>
+    <input type="file" name="image">
+
+    <label>Title</label>
+    <input type="text" name="title" value="{{ post.title|default:'' }}" required>
+
+    <label>Author</label>
+    <input type="text" name="author" value="{{ post.author|default:'' }}" required>
+
+    <label>Content</label>
+    <textarea name="content" required>{{ post.content|default:'' }}</textarea>
+
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'blog_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

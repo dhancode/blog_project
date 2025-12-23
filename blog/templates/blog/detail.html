@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+    .detail-card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .detail-card img {
+        width: 100%;
+        max-height: 350px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .meta {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="detail-card">
+    {% if post.image %}
+        <img src="{{ post.image.url }}">
+    {% endif %}
+
+    <h1>{{ post.title }}</h1>
+    <div class="meta">
+        By {{ post.author }}<br>
+        Created: {{ post.created_at }} | Updated: {{ post.updated_at }}
+    </div>
+
+    <p>{{ post.content }}</p>
+
+    <br>
+    <a href="{% url 'blog_update' post.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'blog_delete' post.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'blog_list' %}" class="btn btn-secondary">Back</a>
+</div>
+{% endblock %}
