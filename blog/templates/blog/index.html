@@ -5,29 +5,38 @@
 <style>
     .card {
         background: white;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 20px;
+        border-radius: 10px;
+        padding: 18px;
+        margin-bottom: 25px;
         display: flex;
-        gap: 15px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        gap: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
     }
 
     .card img {
-        width: 150px;
-        height: 100px;
+        width: 160px;
+        height: 110px;
         object-fit: cover;
-        border-radius: 6px;
+        border-radius: 8px;
     }
 
     .card-content {
         flex: 1;
     }
 
+    .card h3 {
+        margin: 0 0 6px;
+    }
+
     .meta {
         font-size: 13px;
-        color: #555;
-        margin-bottom: 10px;
+        color: #6b7280;
+        margin-bottom: 12px;
     }
 </style>
 
@@ -36,21 +45,23 @@
     {% if post.image %}
         <img src="{{ post.image.url }}">
     {% else %}
-        <img src="https://via.placeholder.com/150">
+        <img src="https://via.placeholder.com/160x110?text=No+Image">
     {% endif %}
 
     <div class="card-content">
         <h3>{{ post.title }}</h3>
         <div class="meta">
-            By {{ post.author }} | {{ post.created_at|date:"M d, Y" }}
+            By {{ post.author }} · {{ post.created_at|date:"M d, Y" }}
         </div>
 
         <a href="{% url 'blog_detail' post.id %}" class="btn btn-secondary">View</a>
         <a href="{% url 'blog_update' post.id %}" class="btn btn-warning">Edit</a>
-        <a href="{% url 'blog_delete' post.id %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'blog_delete' post.id %}"
+           class="btn btn-danger"
+           onclick="return confirm('Delete this blog post?');">Delete</a>
     </div>
 </div>
 {% empty %}
-<p>No blog posts yet.</p>
+<p style="text-align:center;color:#64748b;">No blog posts yet.</p>
 {% endfor %}
 {% endblock %}
